@@ -1,0 +1,41 @@
+:root {
+    --modal-background: rgb(207, 217, 227);
+    --button-background: rgb(18, 156, 18);
+    --button-color: rgb(255, 255, 255);
+
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+.modal form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 20px;
+    background: var(--modal-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.modal form input:not([type='checkbox']) {
+    width: 80%;
+    padding: 10px;
+}
+.modal form button  {
+    color: var(--button-color);
+    width: 60%;
+    background: var(--button-background);
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+}
