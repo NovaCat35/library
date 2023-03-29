@@ -1,5 +1,6 @@
 :root {
-    --modal-background: rgb(207, 217, 227);
+    --modal-background: rgba(123, 161, 72, 0.935);
+    --form-background: rgb(207, 217, 227);
     --button-background: rgb(18, 156, 18);
     --button-color: rgb(255, 255, 255);
     --card-background: lightblue;
@@ -40,14 +41,24 @@ table th {
 
 /*****************/
 /***** FORM *****/
+.modal.hidden {
+    display: none;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--modal-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .modal form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 400px;
     padding: 20px;
-    background: var(--modal-background);
+    background: var(--form-background);
     display: flex;
     flex-direction: column;
     align-items: center;

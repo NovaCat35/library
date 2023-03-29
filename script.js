@@ -37,5 +37,12 @@ function createBookInfo(event) {
   addBookToLibrary(book);
 }
 
+const displayForm = document.querySelector('button[class="add-book"]');
+const modal = document.querySelector('.modal');
 const submit = document.querySelector('button[type="submit"]');
-submit.addEventListener('click', createBookInfo);
+
+displayForm.addEventListener('click', () => modal.classList.remove('hidden'));
+submit.addEventListener('click', (event) => {
+  modal.classList.add('hidden');
+  createBookInfo(event);
+});

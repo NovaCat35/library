@@ -8,25 +8,30 @@
     <title>Library</title>
 </head>
 <body>
-    <div class="modal">
-        <div class="table-container">
-            <table id="books-table">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Pages</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+    <h1>Keep Track of Your Readings</h1>
+    <div class="table-container">
+        <table id="books-table">
+            <thead>
                 <tr>
-                    <td>Mere Christianity</td>
-                    <td>C.S. Lewis</td>
-                    <td>175</td>
-                    <td>In progress</td>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Pages</th>
+                    <th>Status</th>
                 </tr>
-            </table>
-        </div>
+            </thead>
+            <tr>
+                <td>Mere Christianity</td>
+                <td>C.S. Lewis</td>
+                <td>175</td>
+                <td>In progress</td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="add-book">Add a book!</button>
+
+    <div class="modal hidden">
+        <h1>BOOK DETAILS</h1>
         <form action="">
             <input type="text" id="title" name="title" placeholder="Title">
             <input type="text" id="author" name="author" placeholder="Author">
