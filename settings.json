@@ -1,0 +1,34 @@
+{
+    "files.autoSave": "afterDelay",
+    "C_Cpp.updateChannel": "Insiders",
+    "json.schemas": [
+    
+    ],
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#46a8a3" //#229977 is pretty good color
+    },
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "workbench.iconTheme": "Monokai Pro Icons",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    // add below for vscode
+    "editor.tabSize": 3,
+    "[javascript]": {
+       "editor.formatOnSave": false
+    },
+    "editor.codeActionsOnSave": {
+       "source.fixAll": true
+    },
+    "files.eol": "\n",
+    "prettier.printWidth": 999999
+       
+}
+

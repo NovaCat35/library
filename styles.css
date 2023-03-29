@@ -2,7 +2,7 @@
     --modal-background: rgb(207, 217, 227);
     --button-background: rgb(18, 156, 18);
     --button-color: rgb(255, 255, 255);
-
+    --card-background: lightblue;
 }
 
 * {
@@ -14,6 +14,32 @@ html, body {
     min-height: 100vh;
 }
 
+/*****************/
+/***** BOOK CARDS *****/
+.table-container {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px; */
+    padding: 30px;
+}
+table {
+    background: var(--card-background);
+    padding: 20px;
+    width: 90vw;
+}
+table th, table td {
+    border: 1px solid black;
+    padding: 8px;
+}
+table th {
+    padding: 12px 8px;
+    text-align: left;
+    background-color: #70a61a;
+    color: white;
+}
+
+/*****************/
+/***** FORM *****/
 .modal form {
     position: absolute;
     top: 50%;
@@ -39,3 +65,4 @@ html, body {
     border: none;
     border-radius: 10px;
 }
+

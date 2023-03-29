@@ -9,12 +9,30 @@
 </head>
 <body>
     <div class="modal">
+        <div class="table-container">
+            <table id="books-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Pages</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Mere Christianity</td>
+                    <td>C.S. Lewis</td>
+                    <td>175</td>
+                    <td>In progress</td>
+                </tr>
+            </table>
+        </div>
         <form action="">
             <input type="text" id="title" name="title" placeholder="Title">
             <input type="text" id="author" name="author" placeholder="Author">
             <input type="number" id="pages" name="pages" placeholder="Pages">
             <div>
-                <label for="read">Have you finish reading?</label>
+                <label for="read">Have you finish reading this book yet?</label>
                 <input type="checkbox" id="read" name="read">
             </div>
             <button type="submit">Check In!</button>
