@@ -76,4 +76,7 @@ table th {
     border: none;
     border-radius: 10px;
 }
+.deleteTD {
+    border: none;
+}
 

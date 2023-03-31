@@ -8,24 +8,36 @@ class Book {
 }
 const myLibrary = [];
 
-// Display the book from array to table
-function displayLibrary(bookObject) {
+const displayBooks = function displayMyLibraryToTable(bookObject) {
   const table = document.getElementById('books-table');
   const tableRow = table.insertRow();
 
+  // gives data-attribute ID to row base on the current index of newly added book in myLibrary
+  tableRow.dataset.bookId = myLibrary.length - 1;
+
+  // create table-data for each book info
   Object.keys(bookObject).forEach((info) => {
     const tableCell = tableRow.insertCell();
     const bookInfo = document.createTextNode(bookObject[info]);
     tableCell.appendChild(bookInfo);
   });
-}
 
-function addBookToLibrary(book) {
+  // creates the delete btn for new row
+  const deleteBtn = document.createElement('button');
+  const tableCell = tableRow.insertCell();
+
+  deleteBtn.classList.add('deleteBtn');
+  deleteBtn.textContent = 'DELETE';
+  tableCell.classList.add('deleteTD');
+  tableCell.appendChild(deleteBtn);
+};
+
+const addBook = function addBookToLibrary(book) {
   myLibrary.push(book);
-  myLibrary.forEach(displayLibrary);
-}
+  myLibrary.forEach(displayBooks);
+};
 
-function createBookInfo(event) {
+const createBook = function createBookInfo(event) {
   event.preventDefault(); // stop the form from submitting & refreshing page
 
   const title = document.getElementById('title').value;
@@ -34,9 +46,22 @@ function createBookInfo(event) {
   const read = document.getElementById('read').value;
 
   const book = new Book(title, author, pages, read);
-  addBookToLibrary(book);
-}
+  addBook(book);
+};
 
+const deleteBook = function deleteBookFromRowAndLibrary() {
+  const tableBody = document.querySelector('tbody');
+  const rowIndex = this.parentNode.parentNode;
+  tableBody.deleteRow(rowIndex);
+
+  const row = this.parentNode.parentNode;
+  const indexID = row.dataset.bookId;
+
+  // find this info title and delete from myLibrary
+  myLibrary.splice(indexID, 1);
+};
+
+// -- MODAL FORM event listeners --
 const displayForm = document.querySelector('button[class="add-book"]');
 const modal = document.querySelector('.modal');
 const submit = document.querySelector('button[type="submit"]');
@@ -44,5 +69,11 @@ const submit = document.querySelector('button[type="submit"]');
 displayForm.addEventListener('click', () => modal.classList.remove('hidden'));
 submit.addEventListener('click', (event) => {
   modal.classList.add('hidden');
-  createBookInfo(event);
+  createBook(event);
+});
+
+// -- DELETE event listeners --
+document.addEventListener('DOMNodeInserted', () => {
+  const deleteBookBtns = document.querySelectorAll('.deleteBtn');
+  deleteBookBtns.forEach((deleteBtn) => deleteBtn.addEventListener('click', deleteBook));
 });
