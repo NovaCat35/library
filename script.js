@@ -8,12 +8,21 @@ class Book {
 }
 const myLibrary = [];
 
-const displayBooks = function displayMyLibraryToTable(bookObject) {
-  const table = document.getElementById('books-table');
-  const tableRow = table.insertRow();
+// Goes through the rows and (re)assign in case to align row index with current myLibrary index
+function assignIndexId(tableBody) {
+  let id = 0;
+  Array.from(tableBody.rows).forEach((row) => {
+    row.dataset.indexId = id;
+    id += 1;
+  });
+}
 
-  // gives data-attribute ID to row base on the current index of newly added book in myLibrary
-  tableRow.dataset.bookId = myLibrary.length - 1;
+function displayBook(bookObject) {
+  const tableBody = document.querySelector('tbody');
+  const tableRow = tableBody.insertRow();
+
+  // gives data-attribute ID to every row in tableBody to insure index matches with myLibrary
+  assignIndexId(tableBody);
 
   // create table-data for each book info
   Object.keys(bookObject).forEach((info) => {
@@ -30,12 +39,13 @@ const displayBooks = function displayMyLibraryToTable(bookObject) {
   deleteBtn.textContent = 'DELETE';
   tableCell.classList.add('deleteTD');
   tableCell.appendChild(deleteBtn);
-};
+  console.log(myLibrary);
+}
 
-const addBook = function addBookToLibrary(book) {
+function addBookToLibrary(book) {
   myLibrary.push(book);
-  myLibrary.forEach(displayBooks);
-};
+  displayBook(book);
+}
 
 const createBook = function createBookInfo(event) {
   event.preventDefault(); // stop the form from submitting & refreshing page
@@ -46,20 +56,41 @@ const createBook = function createBookInfo(event) {
   const read = document.getElementById('read').value;
 
   const book = new Book(title, author, pages, read);
-  addBook(book);
+  addBookToLibrary(book);
 };
 
-const deleteBook = function deleteBookFromRowAndLibrary() {
-  const tableBody = document.querySelector('tbody');
-  const rowIndex = this.parentNode.parentNode;
-  tableBody.deleteRow(rowIndex);
-
+function deleteBook() {
   const row = this.parentNode.parentNode;
-  const indexID = row.dataset.bookId;
+  const bookIndex = row.dataset.indexId;
 
-  // find this info title and delete from myLibrary
-  myLibrary.splice(indexID, 1);
-};
+  row.remove();
+  myLibrary.splice(bookIndex, 1);
+
+  // reassign data-attribute ID to row so row index is in the right order as myLibrary index
+  const tableBody = document.querySelector('tbody');
+  assignIndexId(tableBody);
+  console.log(myLibrary);
+}
+
+// Sample Books at initial start of UI
+const sampleBooks = [
+  {
+    title: 'Mere Christianity',
+    author: 'C.S. Lewis',
+    pages: 175,
+    status: 'In progress',
+  },
+  {
+    title: 'All Quiet on the Western Front',
+    author: 'Erich Maria Remarque',
+    pages: 295,
+    status: 'In progress',
+  },
+];
+
+sampleBooks.forEach((book) => {
+  addBookToLibrary(book);
+});
 
 // -- MODAL FORM event listeners --
 const displayForm = document.querySelector('button[class="add-book"]');
