@@ -1,9 +1,14 @@
 :root {
     --modal-background: rgba(123, 161, 72, 0.935);
     --form-background: rgb(207, 217, 227);
-    --button-background: rgb(18, 156, 18);
+    --form-btn-background: rgb(18, 156, 18);
+    --border-color: rgb(83, 83, 83);
     --button-color: rgb(255, 255, 255);
-    --card-background: lightblue;
+    --row-even-background: #f5f7f8;
+    --row-odd-background: #e0f2fe;;
+    --in-progress-color: invert(86%) sepia(56%) saturate(3489%) hue-rotate(325deg) brightness(97%) contrast(103%);
+    --complete-color: invert(43%) sepia(90%) saturate(998%) hue-rotate(52deg) brightness(98%) contrast(90%);
+
 }
 
 * {
@@ -16,7 +21,7 @@ html, body {
 }
 
 /*****************/
-/***** BOOK CARDS *****/
+/***** TABLE *****/
 .table-container {
     /* display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -27,10 +32,13 @@ table {
     background: var(--card-background);
     padding: 20px;
     width: 90vw;
+    border-collapse: collapse;
+
 }
 table th, table td {
-    border: 1px solid black;
     padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+
 }
 table th {
     padding: 12px 8px;
@@ -38,7 +46,21 @@ table th {
     background-color: #70a61a;
     color: white;
 }
-
+table tr:nth-child(even) {
+    background-color: var(--row-even-background);
+}
+table tr:nth-child(odd) {
+    background-color: var(--row-odd-background);
+}
+table img {
+    width: 50px;
+}
+table img.in-progress {
+    filter: var(--in-progress-color);
+}
+table img.complete {
+    filter: var(--complete-color);
+}
 /*****************/
 /***** FORM *****/
 .modal.hidden {
@@ -71,12 +93,10 @@ table th {
 .modal form button  {
     color: var(--button-color);
     width: 60%;
-    background: var(--button-background);
+    background: var(--form-btn-background);
     padding: 10px;
     border: none;
     border-radius: 10px;
 }
-.deleteTD {
-    border: none;
-}
+
 

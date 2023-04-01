@@ -1,9 +1,9 @@
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title, author, pages, status) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    this.status = status;
   }
 }
 const myLibrary = [];
@@ -27,8 +27,22 @@ function displayBook(bookObject) {
   // create table-data for each book info
   Object.keys(bookObject).forEach((info) => {
     const tableCell = tableRow.insertCell();
-    const bookInfo = document.createTextNode(bookObject[info]);
-    tableCell.appendChild(bookInfo);
+    if (info !== 'status') {
+      const bookInfo = document.createTextNode(bookObject[info]);
+      tableCell.appendChild(bookInfo);
+    } else {
+      const img = document.createElement('img');
+      img.classList.add('status');
+
+      if (bookObject[info] === true) {
+        img.src = 'images/complete.svg';
+        img.classList.add('complete');
+      } else {
+        img.src = 'images/in-progress.svg';
+        img.classList.add('in-progress');
+      }
+      tableCell.appendChild(img);
+    }
   });
 
   // creates the delete btn for new row
@@ -36,8 +50,9 @@ function displayBook(bookObject) {
   const tableCell = tableRow.insertCell();
 
   deleteBtn.classList.add('deleteBtn');
-  deleteBtn.textContent = 'DELETE';
   tableCell.classList.add('deleteTD');
+
+  deleteBtn.textContent = 'DELETE';
   tableCell.appendChild(deleteBtn);
   console.log(myLibrary);
 }
@@ -53,9 +68,9 @@ const createBook = function createBookInfo(event) {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
-  const read = document.getElementById('read').value;
+  const status = document.getElementById('status').checked;
 
-  const book = new Book(title, author, pages, read);
+  const book = new Book(title, author, pages, status);
   addBookToLibrary(book);
 };
 
@@ -72,19 +87,35 @@ function deleteBook() {
   console.log(myLibrary);
 }
 
+function changeStatus() {
+  if (this.className === 'status complete') {
+    this.className = 'status in-progress';
+    this.src = 'images/in-progress.svg';
+  } else {
+    this.className = 'status complete';
+    this.src = 'images/complete.svg';
+  }
+}
+
 // Sample Books at initial start of UI
 const sampleBooks = [
   {
     title: 'Mere Christianity',
     author: 'C.S. Lewis',
     pages: 175,
-    status: 'In progress',
+    status: true,
   },
   {
     title: 'All Quiet on the Western Front',
     author: 'Erich Maria Remarque',
     pages: 295,
-    status: 'In progress',
+    status: false,
+  },
+  {
+    title: 'To Kill a Mockingbird',
+    author: 'Harper Lee',
+    pages: 281,
+    status: true,
   },
 ];
 
@@ -103,8 +134,12 @@ submit.addEventListener('click', (event) => {
   createBook(event);
 });
 
-// -- DELETE event listeners --
 document.addEventListener('DOMNodeInserted', () => {
+  // -- DELETE event listeners --
   const deleteBookBtns = document.querySelectorAll('.deleteBtn');
   deleteBookBtns.forEach((deleteBtn) => deleteBtn.addEventListener('click', deleteBook));
+
+  // -- STATUS event listeners --
+  const statusBtns = document.querySelectorAll('.status');
+  statusBtns.forEach((statusBtn) => statusBtn.addEventListener('click', changeStatus));
 });
