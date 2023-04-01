@@ -8,38 +8,47 @@
     <title>Library</title>
 </head>
 <body>
-    <h1>Keep Track of Your Readings</h1>
-    <div class="table-container">
-        <table id="books-table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Pages</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody> 
-            </tbody>
-        </table>
-    </div>
-
-    <button class="add-book">Add a book!</button>
-
-    <div class="modal hidden">
-        <h1>BOOK DETAILS</h1>
-        <form action="">
-            <input type="text" id="title" name="title" placeholder="Title">
-            <input type="text" id="author" name="author" placeholder="Author">
-            <input type="number" id="pages" name="pages" placeholder="Pages">
-            <div>
-                <label for="status">Have you finish reading this book yet?</label>
-                <input type="checkbox" id="status" name="status">
+    <header>
+        <div class="navbar">
+            <div class="header-left">
+                <h1>LIBRARY</h1>
+                <h2>Keep Track of Your Readings</h2>
             </div>
-            <button type="submit">Check In!</button>
-        </form>
-    </div>
+            <button class="add-book">Add a book!</button>
+        </div>
+        <div class="modal hidden">
+            <div class="modalContainer">
+                <h1>BOOK DETAILS</h1>
+                <form action="">
+                    <input type="text" id="title" name="title" placeholder="Title" required>
+                    <input type="text" id="author" name="author" placeholder="Author" required>
+                    <input type="number" id="pages" name="pages" placeholder="Pages" required>
+                    <div>
+                        <label for="status">Reading Complete?</label>
+                        <input type="checkbox" id="status" name="status" required>
+                    </div>
+                    <button type="submit">Check In!</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="table-container">
+            <table id="books-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Pages</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

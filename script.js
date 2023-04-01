@@ -11,7 +11,8 @@ const myLibrary = [];
 // Goes through the rows and (re)assign in case to align row index with current myLibrary index
 function assignIndexId(tableBody) {
   let id = 0;
-  Array.from(tableBody.rows).forEach((row) => {
+  Array.from(tableBody.rows).forEach((tr) => {
+    const row = tr;
     row.dataset.indexId = id;
     id += 1;
   });
@@ -61,10 +62,7 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
   displayBook(book);
 }
-
-const createBook = function createBookInfo(event) {
-  event.preventDefault(); // stop the form from submitting & refreshing page
-
+function createBook() {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
@@ -72,7 +70,7 @@ const createBook = function createBookInfo(event) {
 
   const book = new Book(title, author, pages, status);
   addBookToLibrary(book);
-};
+}
 
 function deleteBook() {
   const row = this.parentNode.parentNode;
@@ -127,11 +125,15 @@ sampleBooks.forEach((book) => {
 const displayForm = document.querySelector('button[class="add-book"]');
 const modal = document.querySelector('.modal');
 const submit = document.querySelector('button[type="submit"]');
+const form = document.querySelector('form');
 
 displayForm.addEventListener('click', () => modal.classList.remove('hidden'));
 submit.addEventListener('click', (event) => {
-  modal.classList.add('hidden');
-  createBook(event);
+  if (form.checkValidity()) {
+    event.preventDefault(); // stop the form from submitting & refreshing page
+    modal.classList.add('hidden');
+    createBook(event);
+  }
 });
 
 document.addEventListener('DOMNodeInserted', () => {
