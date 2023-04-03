@@ -55,7 +55,6 @@ function displayBook(bookObject) {
 
   deleteBtn.textContent = 'DELETE';
   tableCell.appendChild(deleteBtn);
-  console.log(myLibrary);
 }
 
 function addBookToLibrary(book) {
@@ -82,7 +81,13 @@ function deleteBook() {
   // reassign data-attribute ID to row so row index is in the right order as myLibrary index
   const tableBody = document.querySelector('tbody');
   assignIndexId(tableBody);
-  console.log(myLibrary);
+}
+
+function clearForm() {
+  document.getElementById('title').value = '';
+  document.getElementById('author').value = '';
+  document.getElementById('pages').value = '';
+  document.getElementById('status').checked = '';
 }
 
 function changeStatus() {
@@ -92,6 +97,18 @@ function changeStatus() {
   } else {
     this.className = 'status complete';
     this.src = 'images/complete.svg';
+  }
+}
+
+function addRemoveModal(displayFormBtn, modal) {
+  if (displayFormBtn.classList.contains('add-btn')) {
+    displayFormBtn.classList.remove('add-btn');
+    displayFormBtn.classList.add('remove-btn');
+    modal.classList.remove('hidden');
+  } else {
+    displayFormBtn.classList.add('add-btn');
+    displayFormBtn.classList.remove('remove-btn');
+    modal.classList.add('hidden');
   }
 }
 
@@ -122,17 +139,19 @@ sampleBooks.forEach((book) => {
 });
 
 // -- MODAL FORM event listeners --
-const displayForm = document.querySelector('button[class="add-book"]');
+const displayFormBtn = document.querySelector('button[class*="display-form-btn"]');
 const modal = document.querySelector('.modal');
 const submit = document.querySelector('button[type="submit"]');
 const form = document.querySelector('form');
 
-displayForm.addEventListener('click', () => modal.classList.remove('hidden'));
+displayFormBtn.addEventListener('click', addRemoveModal.bind(null, displayFormBtn, modal));
+
 submit.addEventListener('click', (event) => {
   if (form.checkValidity()) {
     event.preventDefault(); // stop the form from submitting & refreshing page
-    modal.classList.add('hidden');
     createBook(event);
+    addRemoveModal(displayFormBtn, modal);
+    clearForm();
   }
 });
 
