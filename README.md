@@ -8,3 +8,7 @@ Live Server: https://novacat35.github.io/library 📚
 ## Other Goals:
 Utilized tools such as esLint and prettier. Exploring Airbnb JavaScript Style Guide.
 
+## Images
+material icons: https://pictogrammers.com/library/mdi/
+
+book icon: https://www.freeiconspng.com/img/16367

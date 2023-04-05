@@ -1,15 +1,23 @@
 :root {
-    --header-background: #d9f99d;
+    --header-background: #faf8ff;
     --light-grey: rgb(182, 185, 200);
+    --display-form-btn-background: rgb(161, 168, 206);
+    --display-form-btn-color: invert(100%) sepia(0%) saturate(7500%) hue-rotate(100deg) brightness(115%) contrast(106%);
+    --header-h1-font: 'Bona Nova', serif;
+    --header-h2-font: 'Lora', serif;
+    --header-height: 130px;
 
-    --modal-background: rgba(123, 161, 72, 0.935);
-    --form-background: rgb(207, 217, 227);
+    --modal-h1-font: 'Fredericka the Great', cursive;
+    --modal-background: rgba(125, 119, 116, 0.935);
+    --form-background: rgb(247, 241, 236);
     --form-btn-background: rgb(18, 156, 18);
     --button-color: rgb(255, 255, 255);
     
     --border-color: rgb(83, 83, 83);
     --row-even-background: #f5f7f8;
     --row-odd-background: #e0f2fe;
+    --td-font: 'Courier Prime', monospace;
+    --th-font: 'Dancing Script', cursive;
 
     --in-progress-color: invert(86%) sepia(56%) saturate(3489%) hue-rotate(325deg) brightness(97%) contrast(103%);
     --complete-color: invert(43%) sepia(90%) saturate(998%) hue-rotate(52deg) brightness(98%) contrast(90%);
@@ -26,16 +34,63 @@
 html, body {
     min-height: 100vh;
 }
+button {
+    cursor: pointer;
+}
 
 /*****************/
 /***** NAVBAR *****/
+header h1{
+    font-family: var(--header-h1-font);
+    font-size: 50px;
+}
+header h2{
+    font-family: var(--header-h2-font);
+    font-size: 20px;
+}
+header .modalContainer h1 {
+    font-size: 30px;
+    font-family: var(--modal-h1-font);
+}
 header .navbar {
+    height: var(--header-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px;
     background: var(--header-background);
     box-shadow: 0 1px 5px 1px var(--light-grey);
+}
+header .header-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+header .header-left img{
+    width: 100px;
+}
+.navbar .display-form-btn {
+    border: none;
+    background: var(--display-form-btn-background);
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform .2s ease-in-out;
+}
+.navbar .display-form-btn img {
+    filter: var(--display-form-btn-color);
+}
+.navbar .display-form-btn.display-form-btn.add-btn:hover {
+    animation: shake .4s ease-in-out forwards;
+}
+.navbar .display-form-btn.display-form-btn.remove-btn:hover {
+    animation: shake2 .4s ease-in-out forwards;
+}
+.navbar .display-form-btn.remove-btn {
+    transform: rotate(45deg);
 }
 
 /*****************/
@@ -59,10 +114,16 @@ table th, table td {
 
 }
 table th {
+    font-size: 20px;
+    font-family: var(--th-font);
+    letter-spacing: 3px;
     padding: 12px 8px;
     text-align: left;
     background-color: #70a61a;
     color: white;
+}
+table td {
+    font-family: var(--td-font);
 }
 table tr:nth-child(even) {
     background-color: var(--row-even-background);
@@ -93,7 +154,16 @@ table .deleteBtn {
 table .deleteBtn:hover {
     background: var(--delete-btn-background-hover);
 }
-
+table img {
+    cursor: pointer;
+    transition: transform .5s ease-in-out;
+}
+table img.in-progress:hover {
+    transform: rotate(360deg);
+}
+table img.complete:hover {
+    animation: pop 0.3s linear 1;
+}
 
 /*****************/
 /***** FORM *****/
@@ -104,7 +174,7 @@ table .deleteBtn:hover {
     position: absolute;
     z-index: 1;
     width: 100vw;
-    height: 100vh;
+    min-height: calc(100vh - var(--header-height));
     background: var(--modal-background);
     display: flex;
     flex-direction: column;
@@ -116,7 +186,8 @@ table .deleteBtn:hover {
     flex-direction: column;
     align-items: center;
     background: var(--form-background);
-    padding: 20px 0;
+    padding: 30px 0;
+    border-radius: 15px;
 }
 .modal form {
     width: 400px;
@@ -140,3 +211,55 @@ table .deleteBtn:hover {
 }
 
 
+@keyframes pop{
+    50% {transform: scale(1.2);}
+}
+  
+@keyframes shake {
+    0%, 30%, 60%, 100% {
+        transform: rotate(0deg);
+        }
+    5%, 25%, 65%, 85% {
+        transform: rotate(10deg);
+    }
+    10%, 20%, 70%, 80% {
+        transform: rotate(15deg);
+    }
+    15%, 75% {
+        transform: rotate(20deg);
+    }
+    35%, 55% {
+        transform: rotate(-10deg);
+    }
+    40%, 50% {
+        transform: rotate(-15deg);
+    }
+    45% {
+        transform: rotate(-20deg);
+    }
+}
+
+@keyframes shake2 {
+    0%, 30%, 60%, 100% {
+        transform: rotate(45deg);
+        }
+    5%, 25%, 65%, 85% {
+        transform: rotate(60deg);
+    }
+    10%, 20%, 70%, 80% {
+        transform: rotate(70deg);
+    }
+    15%, 75% {
+        transform: rotate(80deg);
+    }
+    35%, 55% {
+        transform: rotate(-60deg);
+    }
+    40%, 50% {
+        transform: rotate(-70deg);
+    }
+    45% {
+        transform: rotate(-80deg);
+    }
+ 
+}
