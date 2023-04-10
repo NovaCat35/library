@@ -1,29 +1,35 @@
 :root {
     --header-background: #faf8ff;
     --light-grey: rgb(182, 185, 200);
-    --display-form-btn-background: rgb(161, 168, 206);
+    --display-form-btn-background: rgb(143, 155, 222);
     --display-form-btn-color: invert(100%) sepia(0%) saturate(7500%) hue-rotate(100deg) brightness(115%) contrast(106%);
     --header-h1-font: 'Bona Nova', serif;
     --header-h2-font: 'Lora', serif;
     --header-height: 130px;
 
     --modal-h1-font: 'Fredericka the Great', cursive;
+    --form-btn-font: 'Lora', serif;
     --modal-background: rgba(125, 119, 116, 0.935);
     --form-background: rgb(247, 241, 236);
-    --form-btn-background: rgb(18, 156, 18);
+    --form-btn-background: rgb(154, 89, 32);
     --button-color: rgb(255, 255, 255);
     
+    --main-background: rgb(237, 219, 219);
     --border-color: rgb(83, 83, 83);
-    --row-even-background: #f5f7f8;
-    --row-odd-background: #e0f2fe;
+    --th-background: rgb(170, 104, 81);
+    --row-even-background: #f8f5f5;
+    --row-odd-background: #fee5e0;
+    --td-color: rgb(107, 102, 102);
     --td-font: 'Courier Prime', monospace;
-    --th-font: 'Dancing Script', cursive;
+    --th-font: 'Crimson Text', serif;
 
     --in-progress-color: invert(86%) sepia(56%) saturate(3489%) hue-rotate(325deg) brightness(97%) contrast(103%);
     --complete-color: invert(43%) sepia(90%) saturate(998%) hue-rotate(52deg) brightness(98%) contrast(90%);
 
-    --delete-btn-background: rgb(218, 42, 42);
-    --delete-btn-background-hover: rgb(241, 10, 10);
+    --delete-btn-background: rgb(196, 40, 40);
+    --delete-btn-background-hover: rgb(226, 30, 30);
+
+    --footer-background: rgb(234, 212, 212);;
 }
 
 * {
@@ -33,6 +39,10 @@
 
 html, body {
     min-height: 100vh;
+}
+body {
+    display: flex;
+    flex-direction: column;
 }
 button {
     cursor: pointer;
@@ -60,6 +70,7 @@ header .navbar {
     padding: 30px;
     background: var(--header-background);
     box-shadow: 0 1px 5px 1px var(--light-grey);
+    z-index: 2;
 }
 header .header-left {
     display: flex;
@@ -81,6 +92,10 @@ header .header-left img{
     transition: transform .2s ease-in-out;
 }
 .navbar .display-form-btn img {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
     filter: var(--display-form-btn-color);
 }
 .navbar .display-form-btn.display-form-btn.add-btn:hover {
@@ -95,18 +110,23 @@ header .header-left img{
 
 /*****************/
 /***** TABLE *****/
+main{
+    flex: 1;
+    background: var(--main-background);
+}
 .table-container {
-    /* display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px; */
-    padding: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 table {
     background: var(--card-background);
-    padding: 20px;
-    width: 90vw;
+    width: 100%;
     border-collapse: collapse;
-
+    border-left: 10px solid var(--th-background); 
+    border-right: 10px solid var(--th-background); 
+    border-bottom: 5px solid var(--th-background); 
+    border-radius: 10px; 
 }
 table th, table td {
     padding: 8px;
@@ -114,16 +134,21 @@ table th, table td {
 
 }
 table th {
-    font-size: 20px;
+    font-size: 22px;
     font-family: var(--th-font);
     letter-spacing: 3px;
     padding: 12px 8px;
     text-align: left;
-    background-color: #70a61a;
+    background-color: var(--th-background);
     color: white;
+}
+table td:first-child {
+    font-weight: 700;
+    color: black;
 }
 table td {
     font-family: var(--td-font);
+    color: var(--td-color);
 }
 table tr:nth-child(even) {
     background-color: var(--row-even-background);
@@ -168,9 +193,16 @@ table img.complete:hover {
 /*****************/
 /***** FORM *****/
 .modal.hidden {
-    display: none;
+    /* display: none; */
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    transition: min-height 1s ease-in-out;
 }
 .modal {
+    opacity: 1;
+    visibility: visible;
     position: absolute;
     z-index: 1;
     width: 100vw;
@@ -197,19 +229,80 @@ table img.complete:hover {
     align-items: center;
     gap: 30px;
 }
+.modal form input{ 
+    font-size: 15px;
+}
 .modal form input:not([type='checkbox']) {
     width: 80%;
     padding: 10px;
 }
+.modal form .status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+label {
+    font-size: 1.1rem;
+}
+.modal form input[type='checkbox'] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid black;
+    border-radius: 0.15rem;
+    display: grid;
+    place-content: center;
+}
+.modal form input[type="checkbox"]::before {
+    content: "";
+    width: 1.3rem;
+    height: 1.3rem;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-btn-background);
+    clip-path: polygon(28% 38%, 41% 53%, 75% 24%, 86% 38%, 40% 78%, 15% 50%);
+}
+.modal form input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
 .modal form button  {
     color: var(--button-color);
     width: 60%;
+    font-size: 20px;
+    font-family: var(--form-btn-font);
     background: var(--form-btn-background);
     padding: 10px;
     border: none;
     border-radius: 10px;
 }
 
+/*****************/
+/***** FOOTER *****/
+/* footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--footer-background);
+    color: black;
+    font-size: 18px;
+    padding: .6em;
+}
+footer a {
+    display: flex;
+    align-items: center;
+}
+footer img {
+    border-radius: 50%;
+    width: 30px;
+    transition: transform .5s ease-in-out;
+}
+footer img:hover {
+    transform: rotate(360deg);
+} */
 
 @keyframes pop{
     50% {transform: scale(1.2);}

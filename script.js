@@ -115,9 +115,15 @@ function addRemoveModal(displayFormBtn, modal) {
 // Sample Books at initial start of UI
 const sampleBooks = [
   {
-    title: 'Mere Christianity',
+    title: 'Trapeze (2012)',
+    author: 'Simon Mawer',
+    pages: 385,
+    status: true,
+  },
+  {
+    title: 'The Lion, the Witch and the Wardrobe',
     author: 'C.S. Lewis',
-    pages: 175,
+    pages: 177,
     status: true,
   },
   {
