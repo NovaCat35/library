@@ -63,6 +63,7 @@ header .modalContainer h1 {
     font-family: var(--modal-h1-font);
 }
 header .navbar {
+    position: relative;
     height: var(--header-height);
     display: flex;
     justify-content: space-between;
@@ -194,24 +195,27 @@ table img.complete:hover {
 /***** FORM *****/
 .modal.hidden {
     /* display: none; */
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0;
+    visibility: hidden; */
     height: 0;
     overflow: hidden;
-    transition: min-height 1s ease-in-out;
+    transition: height 1s ease-in-out;
 }
 .modal {
-    opacity: 1;
-    visibility: visible;
+    /* opacity: 1;
+    visibility: visible; */
     position: absolute;
+    overflow: hidden;
     z-index: 1;
     width: 100vw;
-    min-height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height));
     background: var(--modal-background);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: height .5s ease-in-out;
+
 }
 .modal .modalContainer {
     display: flex;
