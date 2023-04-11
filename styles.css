@@ -13,8 +13,9 @@
     --form-background: rgb(247, 241, 236);
     --form-btn-background: rgb(154, 89, 32);
     --button-color: rgb(255, 255, 255);
+    --form-label-background: rgb(143, 95, 53);
     
-    --main-background: rgb(237, 219, 219);
+    --main-background: rgb(243, 229, 229);
     --border-color: rgb(83, 83, 83);
     --th-background: rgb(170, 104, 81);
     --row-even-background: #f8f5f5;
@@ -111,7 +112,7 @@ header .header-left img{
 
 /*****************/
 /***** TABLE *****/
-main{
+main {
     flex: 1;
     background: var(--main-background);
 }
@@ -199,7 +200,7 @@ table img.complete:hover {
     visibility: hidden; */
     height: 0;
     overflow: hidden;
-    transition: height 1s ease-in-out;
+    transition: height .7s ease-in-out;
 }
 .modal {
     /* opacity: 1;
@@ -235,10 +236,39 @@ table img.complete:hover {
 }
 .modal form input{ 
     font-size: 15px;
+    border: 2px solid rgb(209, 203, 200);
+    border-radius: 5px;
+}
+.modal form input:focus {
+    outline: none;
 }
 .modal form input:not([type='checkbox']) {
     width: 80%;
     padding: 10px;
+}
+/* label popup within input */
+.input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-container label {
+    position: absolute;
+    top: 10px;
+    left: 45px;
+    transition: all .3s linear;
+}
+.input-container label.focus {
+    color: #ece4de;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    background-color:var(--form-label-background);
+    padding: 3px 20px;
+    border-radius: 5px;
+    transform: translateX(2px) translateY(-25px);
 }
 .modal form .status-container {
     display: flex;
@@ -246,7 +276,7 @@ table img.complete:hover {
     align-items: center;
     gap: 10px;
 }
-label {
+.status-container label {
     font-size: 1.1rem;
 }
 .modal form input[type='checkbox'] {

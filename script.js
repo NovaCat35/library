@@ -83,11 +83,16 @@ function deleteBook() {
   assignIndexId(tableBody);
 }
 
-function clearForm() {
+function clearForm(inputs) {
   document.getElementById('title').value = '';
   document.getElementById('author').value = '';
   document.getElementById('pages').value = '';
   document.getElementById('status').checked = '';
+
+  inputs.forEach((input) => {
+    const label = input.previousElementSibling;
+    label.classList.remove('focus');
+  });
 }
 
 function changeStatus() {
@@ -112,6 +117,11 @@ function addRemoveModal(displayFormBtn, modal) {
   }
 }
 
+function placeholderActive(selector) {
+  return document.querySelector(`#${selector}:placeholder-shown`);
+}
+
+// -----------------------------------
 // Sample Books at initial start of UI
 const sampleBooks = [
   {
@@ -144,20 +154,37 @@ sampleBooks.forEach((book) => {
   addBookToLibrary(book);
 });
 
+// -----------------------------------
 // -- MODAL FORM event listeners --
 const displayFormBtn = document.querySelector('button[class*="display-form-btn"]');
 const modal = document.querySelector('.modal');
 const submit = document.querySelector('button[type="submit"]');
 const form = document.querySelector('form');
+const inputs = document.querySelectorAll('.input-container input');
 
+// Show label popup on focus | remove when off-focus
+inputs.forEach((input) => input.addEventListener('focus', (event) => {
+  const label = event.target.previousElementSibling;
+  label.classList.add('focus');
+}));
+inputs.forEach((input) => input.addEventListener('focusout', (event) => {
+  const label = event.target.previousElementSibling;
+  const inputID = event.target.id;
+  if (placeholderActive(inputID)) {
+    label.classList.remove('focus');
+  }
+}));
+
+// Show the form/modal
 displayFormBtn.addEventListener('click', addRemoveModal.bind(null, displayFormBtn, modal));
 
+// submission btn checks validity, take info, and clears form
 submit.addEventListener('click', (event) => {
   if (form.checkValidity()) {
     event.preventDefault(); // stop the form from submitting & refreshing page
     createBook(event);
     addRemoveModal(displayFormBtn, modal);
-    clearForm();
+    clearForm(inputs);
   }
 });
 
