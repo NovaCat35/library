@@ -6,8 +6,9 @@ class Book {
     this.status = status;
   }
 }
-const myLibrary = [];
+let myLibrary = [];
 
+// -----------------------------------
 // Goes through the rows and (re)assign in case to align row index with current myLibrary index
 function assignIndexId(tableBody) {
   let id = 0;
@@ -60,7 +61,13 @@ function displayBook(bookObject) {
 function addBookToLibrary(book) {
   myLibrary.push(book);
   displayBook(book);
+
+  // Convert the array to a JSON string
+  const jsonString = JSON.stringify(myLibrary);
+  // Save the JSON string to local storage
+  localStorage.setItem('myLibraryKey', jsonString);
 }
+
 function createBook() {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
@@ -86,6 +93,8 @@ function deleteBook() {
 
   row.remove();
   myLibrary.splice(bookIndex, 1);
+  // -- SAVE myLibrary info to LOCAL STORAGE --
+  localStorage.setItem('myLibraryKey', JSON.stringify(myLibrary));
 
   // reassign data-attribute ID to row so row index is in the right order as myLibrary index
   const tableBody = document.querySelector('tbody');
@@ -170,9 +179,21 @@ const sampleBooks = [
   },
 ];
 
-sampleBooks.forEach((book) => {
-  addBookToLibrary(book);
-});
+// -----------------------------------
+// RETRIEVE myLibrary info from LOCAL STORAGE
+if (localStorage.getItem('myLibraryKey') === null) {
+  // add the default books
+  sampleBooks.forEach((book) => {
+    addBookToLibrary(book);
+  });
+} else {
+  const jsonString = localStorage.getItem('myLibraryKey');
+  // Convert the JSON string back to an array of objects (*repopulate myLibrary*)
+  myLibrary = JSON.parse(jsonString);
+  myLibrary.forEach((book) => displayBook(book));
+  checkTableEmpty();
+  // localStorage.clear();
+}
 
 // -----------------------------------
 // -- MODAL FORM event listeners --
