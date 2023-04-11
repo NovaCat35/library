@@ -19,6 +19,42 @@ function assignIndexId(tableBody) {
   });
 }
 
+function checkTableEmpty() {
+  const alert = document.querySelector('.empty-table-alert');
+  const rowsLength = document.querySelectorAll('table tbody tr').length;
+  if (rowsLength === 0) {
+    alert.classList.add('active');
+  } else {
+    alert.classList.remove('active');
+  }
+}
+
+function deleteBook() {
+  const row = this.parentNode.parentNode;
+  const bookIndex = row.dataset.indexId;
+
+  row.remove();
+  myLibrary.splice(bookIndex, 1);
+  // -- SAVE myLibrary info to LOCAL STORAGE --
+  localStorage.setItem('myLibraryKey', JSON.stringify(myLibrary));
+
+  // reassign data-attribute ID to row so row index is in the right order as myLibrary index
+  const tableBody = document.querySelector('tbody');
+  assignIndexId(tableBody);
+
+  checkTableEmpty();
+}
+
+function changeStatus() {
+  if (this.className === 'status complete') {
+    this.className = 'status in-progress';
+    this.src = 'images/in-progress.svg';
+  } else {
+    this.className = 'status complete';
+    this.src = 'images/complete.svg';
+  }
+}
+
 function displayBook(bookObject) {
   const tableBody = document.querySelector('tbody');
   const tableRow = tableBody.insertRow();
@@ -43,11 +79,13 @@ function displayBook(bookObject) {
         img.src = 'images/in-progress.svg';
         img.classList.add('in-progress');
       }
+      // -- STATUS event listeners --
+      img.addEventListener('click', changeStatus);
       tableCell.appendChild(img);
     }
   });
 
-  // creates the delete btn for new row
+  // CREATE delete btn for new row
   const deleteBtn = document.createElement('button');
   const tableCell = tableRow.insertCell();
 
@@ -55,6 +93,8 @@ function displayBook(bookObject) {
   tableCell.classList.add('deleteTD');
 
   deleteBtn.textContent = 'DELETE';
+  // -- DELETE event listeners --
+  deleteBtn.addEventListener('click', deleteBook);
   tableCell.appendChild(deleteBtn);
 }
 
@@ -78,31 +118,6 @@ function createBook() {
   addBookToLibrary(book);
 }
 
-function checkTableEmpty() {
-  const alert = document.querySelector('.empty-table-alert');
-  const rowsLength = document.querySelectorAll('table tbody tr').length;
-  if (rowsLength === 0) {
-    alert.classList.add('active');
-  } else {
-    alert.classList.remove('active');
-  }
-}
-function deleteBook() {
-  const row = this.parentNode.parentNode;
-  const bookIndex = row.dataset.indexId;
-
-  row.remove();
-  myLibrary.splice(bookIndex, 1);
-  // -- SAVE myLibrary info to LOCAL STORAGE --
-  localStorage.setItem('myLibraryKey', JSON.stringify(myLibrary));
-
-  // reassign data-attribute ID to row so row index is in the right order as myLibrary index
-  const tableBody = document.querySelector('tbody');
-  assignIndexId(tableBody);
-
-  checkTableEmpty();
-}
-
 function clearForm() {
   document.getElementById('title').value = '';
   document.getElementById('author').value = '';
@@ -115,16 +130,6 @@ function clearForm() {
     const label = input.previousElementSibling;
     label.classList.remove('focus');
   });
-}
-
-function changeStatus() {
-  if (this.className === 'status complete') {
-    this.className = 'status in-progress';
-    this.src = 'images/in-progress.svg';
-  } else {
-    this.className = 'status complete';
-    this.src = 'images/complete.svg';
-  }
 }
 
 function addRemoveModal(displayFormBtn, modal) {
@@ -228,16 +233,6 @@ submit.addEventListener('click', (event) => {
     clearForm(inputs);
     checkTableEmpty();
   }
-});
-
-document.addEventListener('DOMNodeInserted', () => {
-  // -- DELETE event listeners --
-  const deleteBookBtns = document.querySelectorAll('.deleteBtn');
-  deleteBookBtns.forEach((deleteBtn) => deleteBtn.addEventListener('click', deleteBook));
-
-  // -- STATUS event listeners --
-  const statusBtns = document.querySelectorAll('.status');
-  statusBtns.forEach((statusBtn) => statusBtn.addEventListener('click', changeStatus));
 });
 
 const renewBtn = document.querySelector('#renewBtn');
