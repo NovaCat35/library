@@ -71,6 +71,15 @@ function createBook() {
   addBookToLibrary(book);
 }
 
+function checkTableEmpty() {
+  const alert = document.querySelector('.empty-table-alert');
+  const rowsLength = document.querySelectorAll('table tbody tr').length;
+  if (rowsLength === 0) {
+    alert.classList.add('active');
+  } else {
+    alert.classList.remove('active');
+  }
+}
 function deleteBook() {
   const row = this.parentNode.parentNode;
   const bookIndex = row.dataset.indexId;
@@ -81,13 +90,17 @@ function deleteBook() {
   // reassign data-attribute ID to row so row index is in the right order as myLibrary index
   const tableBody = document.querySelector('tbody');
   assignIndexId(tableBody);
+
+  checkTableEmpty();
 }
 
-function clearForm(inputs) {
+function clearForm() {
   document.getElementById('title').value = '';
   document.getElementById('author').value = '';
   document.getElementById('pages').value = '';
   document.getElementById('status').checked = '';
+
+  const inputs = document.querySelectorAll('.input-container input');
 
   inputs.forEach((input) => {
     const label = input.previousElementSibling;
@@ -115,6 +128,7 @@ function addRemoveModal(displayFormBtn, modal) {
     displayFormBtn.classList.remove('remove-btn');
     modal.classList.add('hidden');
   }
+  clearForm();
 }
 
 function placeholderActive(selector) {
@@ -147,6 +161,12 @@ const sampleBooks = [
     author: 'Harper Lee',
     pages: 281,
     status: true,
+  },
+  {
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    pages: 137,
+    status: false,
   },
 ];
 
@@ -185,6 +205,7 @@ submit.addEventListener('click', (event) => {
     createBook(event);
     addRemoveModal(displayFormBtn, modal);
     clearForm(inputs);
+    checkTableEmpty();
   }
 });
 
@@ -196,4 +217,14 @@ document.addEventListener('DOMNodeInserted', () => {
   // -- STATUS event listeners --
   const statusBtns = document.querySelectorAll('.status');
   statusBtns.forEach((statusBtn) => statusBtn.addEventListener('click', changeStatus));
+});
+
+const renewBtn = document.querySelector('#renewBtn');
+renewBtn.addEventListener('click', () => {
+  sampleBooks.forEach((book) => {
+    const newBook = book;
+    newBook.status = false;
+    addBookToLibrary(newBook);
+    checkTableEmpty();
+  });
 });
