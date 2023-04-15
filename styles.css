@@ -58,11 +58,11 @@ button {
 /***** NAVBAR *****/
 header h1{
     font-family: var(--header-h1-font);
-    font-size: 50px;
+    font-size: clamp(40px, 6.3vw, 50px);
 }
 header h2{
     font-family: var(--header-h2-font);
-    font-size: 20px;
+    font-size: clamp(10px, 3.5vw, 20px);
 }
 header .modalContainer h1 {
     font-size: 30px;
@@ -85,7 +85,7 @@ header .header-left {
     align-items: center;
 }
 header .header-left img{
-    width: 100px;
+    width: clamp(80px, 23vw, 100px);
 }
 .navbar .display-form-btn {
     border: none;
@@ -122,9 +122,9 @@ main {
     background: var(--main-background);
 }
 .table-container {
-    display: flex;
-    justify-content: center;
     padding: 20px;
+    width: 100vw;
+    overflow-x: auto;
 }
 table {
     background: var(--card-background);
@@ -466,3 +466,18 @@ footer img:hover {
     }
  
 }
+
+@media screen and (max-width: 630px) {
+    header .header-left {
+        gap: 15px;
+    }
+    header .navbar {
+        padding: 10px;
+    }
+    thead th {
+        font-size: 16px;
+    }
+    .modal form {
+        width: 350px;
+    }
+}  

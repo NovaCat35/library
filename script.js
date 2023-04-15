@@ -195,6 +195,7 @@ if (localStorage.getItem('myLibraryKey') === null) {
   const jsonString = localStorage.getItem('myLibraryKey');
   // Convert the JSON string back to an array of objects (*repopulate myLibrary*)
   myLibrary = JSON.parse(jsonString);
+  console.log(myLibrary);
   myLibrary.forEach((book) => displayBook(book));
   checkTableEmpty();
   // localStorage.clear();
