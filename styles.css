@@ -470,7 +470,7 @@ footer img:hover {
 @media screen and (max-width: 630px) {
     header .header-left {
         gap: 15px;
-    }
+    } 
     header .navbar {
         padding: 10px;
     }
